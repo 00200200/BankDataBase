@@ -46,6 +46,8 @@ VALUES (seq_customer_id.NEXTVAL, 'Wojtek', 'Suchecki', 'wojtek.suchecki@gmail.co
 INSERT INTO Customers (CustomerID, FirstName, LastName, Email, Phone, BirthDate, PESEL, IDNumber, Gender, CreatedAt)
 VALUES (seq_customer_id.NEXTVAL, 'Michal', 'Furgala', 'michal.furgala@gmail.com', '321321321', TO_DATE('2002-04-04', 'YYYY-MM-DD'), '33322111100', 'DBC654987', 'M', SYSDATE);
 
+INSERT INTO Customers (CustomerID, FirstName, LastName, Email, Phone, BirthDate, PESEL, IDNumber, Gender, CreatedAt)
+VALUES (seq_customer_id.NEXTVAL, 'Robert', 'Lewandowski', 'Robert.Lewandowski@gmail.com', '123421342', TO_DATE('2002-04-04', 'YYYY-MM-DD'), '33322111100', 'DBC6511187', 'M', SYSDATE);
 -- Addresses
 INSERT INTO Addresses (AddressID, CustomerID, Street, City, State, PostalCode, Country)
 VALUES (seq_address_id.NEXTVAL, 1, 'ul. Grunwaldzka 1', 'Warszawa', 'Mazowieckie', '00-001', 'Polska');
@@ -118,7 +120,7 @@ INSERT INTO Cards (CardID, CustomerID, CardNumber, ExpirationDate, CVV, CardType
 VALUES (seq_card_id.NEXTVAL, 3, '5555666677778888', TO_DATE('2024-05-31', 'YYYY-MM-DD'), '789', 'MasterCard');
 
 INSERT INTO Cards (CardID, CustomerID, CardNumber, ExpirationDate, CVV, CardType)
-VALUES (seq_card_id.NEXTVAL, 4, '8888777766665555', TO_DATE('2027-07-31', 'YYYY-MM-DD'), '321', 'Visa');
+VALUES (seq_card_id.NEXTVAL, 4, '8888777766665555', TO_DATE('2024-06-08', 'YYYY-MM-DD'), '321', 'Visa');
 
 -- TransactionLimits
 INSERT INTO TransactionLimits (LimitID, CardID, TransactionLimitType, DailyLimit, MonthlyLimit)
@@ -141,31 +143,33 @@ VALUES (seq_limit_id.NEXTVAL, 2, 'Physical Card', 700.00, 12000.00);
 
 -- TransactionHistory
 INSERT INTO TransactionHistory (TransactionID, CardID, TransactionDate, Amount, MerchantName)
-VALUES (seq_transaction_id.NEXTVAL, 1, SYSDATE, 50.00, 'Biedronka');
+VALUES (seq_transaction_id.NEXTVAL, 1, SYSDATE - INTERVAL '30' DAY, 50.00, 'Biedronka');
 
 INSERT INTO TransactionHistory (TransactionID, CardID, TransactionDate, Amount, MerchantName)
-VALUES (seq_transaction_id.NEXTVAL, 2, SYSDATE, 30.00, 'Kaufland');
+VALUES (seq_transaction_id.NEXTVAL, 2, SYSDATE - INTERVAL '20' DAY, 30.00, 'Kaufland');
 
 INSERT INTO TransactionHistory (TransactionID, CardID, TransactionDate, Amount, MerchantName)
-VALUES (seq_transaction_id.NEXTVAL, 3, SYSDATE, 6.00, 'Trumienka');
+VALUES (seq_transaction_id.NEXTVAL, 3, SYSDATE - INTERVAL '10' DAY, 6.00, 'Trumienka');
 
 INSERT INTO TransactionHistory (TransactionID, CardID, TransactionDate, Amount, MerchantName)
-VALUES (seq_transaction_id.NEXTVAL, 4, SYSDATE, 100.00, 'Żabka');
+VALUES (seq_transaction_id.NEXTVAL, 4, SYSDATE - INTERVAL '5' DAY, 100.00, 'Żabka');
 
+INSERT INTO TransactionHistory (TransactionID, CardID, TransactionDate, Amount, MerchantName)
+VALUES (seq_transaction_id.NEXTVAL, 4, SYSDATE - INTERVAL '2' DAY, 11000.00, 'ISpot');
 -- LoginHistory
 INSERT INTO LoginHistory (LoginID, CustomerID, LoginDate, IPAddress)
-VALUES (seq_login_id.NEXTVAL, 1, SYSDATE, '192.168.1.1');
+VALUES (seq_login_id.NEXTVAL, 1, SYSDATE - INTERVAL '1' DAY, '192.168.1.1');
 
 INSERT INTO LoginHistory (LoginID, CustomerID, LoginDate, IPAddress)
-VALUES (seq_login_id.NEXTVAL, 2, SYSDATE, '192.168.1.2');
+VALUES (seq_login_id.NEXTVAL, 2, SYSDATE - INTERVAL '2' DAY, '192.168.1.2');
 
 INSERT INTO LoginHistory (LoginID, CustomerID, LoginDate, IPAddress)
-VALUES (seq_login_id.NEXTVAL, 3, SYSDATE, '192.168.1.3');
+VALUES (seq_login_id.NEXTVAL, 3, SYSDATE - INTERVAL '3' DAY, '192.168.1.3');
 
 INSERT INTO LoginHistory (LoginID, CustomerID, LoginDate, IPAddress)
-VALUES (seq_login_id.NEXTVAL, 4, SYSDATE, '192.168.1.4');
+VALUES (seq_login_id.NEXTVAL, 4, SYSDATE - INTERVAL '4' DAY, '192.168.1.4');
 
--- CustomerAccounts -- WIELE DO WIELU Kowalsy mają wspolne Konto Fugala posiada 3 konta.
+-- CustomerAccounts -- WIELE DO WIELU Kowalscy mają wspólne konto, Furgala posiada 3 konta.
 INSERT INTO CustomerAccounts (CustomerID, AccountID)
 VALUES (1, 1); 
 
