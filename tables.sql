@@ -1,56 +1,55 @@
--- Customers (Klienci)
+-- TABELA Customers (Klienci)
 CREATE TABLE Customers (
-    CustomerID NUMBER PRIMARY KEY,
-    FirstName VARCHAR(50) NOT NULL,
-    LastName VARCHAR(50) NOT NULL,
-    Email VARCHAR(100) NOT NULL,
-    Phone VARCHAR(15),
+    CustomerID NUMBER DEFAULT seq_customer_id.NEXTVAL PRIMARY KEY,
+    FirstName VARCHAR2(50) NOT NULL,
+    LastName VARCHAR2(50) NOT NULL,
+    Email VARCHAR2(100) NOT NULL,
+    Phone VARCHAR2(15),
     BirthDate DATE NOT NULL,
-    PESEL VARCHAR(11) NOT NULL,
-    IDNumber VARCHAR(20) NOT NULL,
+    PESEL VARCHAR2(11) NOT NULL,
+    IDNumber VARCHAR2(20) NOT NULL,
     Gender CHAR(1) CHECK (Gender IN ('M','F','O')),
     CreatedAt DATE DEFAULT SYSDATE
 );
--- DODADC DATE URODZENA XDD 
 
--- Addresses (Adresy)
+-- TABELA Addresses (Adresy)
 CREATE TABLE Addresses (
-    AddressID NUMBER PRIMARY KEY,
+    AddressID NUMBER DEFAULT seq_address_id.NEXTVAL PRIMARY KEY,
     CustomerID NUMBER NOT NULL,
-    Street VARCHAR(255),
-    City VARCHAR(100),
-    State VARCHAR(100),
-    PostalCode VARCHAR(20),
-    Country VARCHAR(100),
+    Street VARCHAR2(255),
+    City VARCHAR2(100),
+    State VARCHAR2(100),
+    PostalCode VARCHAR2(20),
+    Country VARCHAR2(100),
     FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID) -- Relacja jeden do wielu: Jeden klient może mieć wiele adresów
 );
 
--- Departments (Działy)
+-- TABELA Departments (Działy)
 CREATE TABLE Departments (
-    DepartmentID NUMBER PRIMARY KEY,
-    DepartmentName VARCHAR(100) NOT NULL
+    DepartmentID NUMBER DEFAULT seq_department_id.NEXTVAL PRIMARY KEY,
+    DepartmentName VARCHAR2(100) NOT NULL
 );
 
--- Branches (Oddziały)
+-- TABELA Branches (Oddziały)
 CREATE TABLE Branches (
-    BranchID NUMBER PRIMARY KEY,
-    BranchName VARCHAR(100) NOT NULL,
-    BranchAddress VARCHAR(255)
+    BranchID NUMBER DEFAULT seq_branch_id.NEXTVAL PRIMARY KEY,
+    BranchName VARCHAR2(100) NOT NULL,
+    BranchAddress VARCHAR2(255)
 );
 
--- Positions (Stanowiska)
+-- TABELA Positions (Stanowiska)
 CREATE TABLE Positions (
-    PositionID NUMBER PRIMARY KEY,
-    PositionName VARCHAR(50) NOT NULL
+    PositionID NUMBER DEFAULT seq_position_id.NEXTVAL PRIMARY KEY,
+    PositionName VARCHAR2(50) NOT NULL
 );
 
--- Employees (Pracownicy)
+-- TABELA Employees (Pracownicy)
 CREATE TABLE Employees (
-    EmployeeID NUMBER PRIMARY KEY,
-    FirstName VARCHAR(50) NOT NULL,
-    LastName VARCHAR(50) NOT NULL,
-    Email VARCHAR(100),
-    Phone VARCHAR(15),
+    EmployeeID NUMBER DEFAULT seq_employee_id.NEXTVAL PRIMARY KEY,
+    FirstName VARCHAR2(50) NOT NULL,
+    LastName VARCHAR2(50) NOT NULL,
+    Email VARCHAR2(100),
+    Phone VARCHAR2(15),
     DepartmentID NUMBER NOT NULL,
     BranchID NUMBER NOT NULL,
     PositionID NUMBER NOT NULL,
@@ -59,16 +58,16 @@ CREATE TABLE Employees (
     FOREIGN KEY (PositionID) REFERENCES Positions(PositionID) -- Relacja jeden do wielu: Jedna pozycja może być przypisana wielu pracownikom
 );
 
--- AccountTypes (Typy kont)
+-- TABELA AccountTypes (Typy kont)
 CREATE TABLE AccountTypes (
-    AccountTypeID NUMBER PRIMARY KEY,
-    AccountTypeName VARCHAR(50) NOT NULL
+    AccountTypeID NUMBER DEFAULT seq_account_type_id.NEXTVAL PRIMARY KEY,
+    AccountTypeName VARCHAR2(50) NOT NULL
 );
 
--- Accounts (Konta)
+-- TABELA Accounts (Konta)
 CREATE TABLE Accounts ( 
-    AccountID NUMBER PRIMARY KEY,
-    AccountNumber VARCHAR(26) NOT NULL,
+    AccountID NUMBER DEFAULT seq_account_id.NEXTVAL PRIMARY KEY,
+    AccountNumber VARCHAR2(26) NOT NULL,
     AccountTypeID NUMBER NOT NULL,
     BranchID NUMBER NOT NULL,
     Balance NUMBER(15,2),
@@ -77,46 +76,47 @@ CREATE TABLE Accounts (
     FOREIGN KEY (BranchID) REFERENCES Branches(BranchID) -- Relacja jeden do wielu: Jeden oddział może mieć wiele kont
 );
 
--- Cards (Karty)
+-- TABELA Cards (Karty)
 CREATE TABLE Cards (
-    CardID NUMBER PRIMARY KEY,
+    CardID NUMBER DEFAULT seq_card_id.NEXTVAL PRIMARY KEY,
     CustomerID NUMBER NOT NULL,
-    CardNumber VARCHAR(16) NOT NULL,
+    CardNumber VARCHAR2(16) NOT NULL,
     ExpirationDate DATE NOT NULL,
-    CVV VARCHAR(3) NOT NULL,
-    CardType VARCHAR(20),
+    CVV VARCHAR2(3) NOT NULL,
+    CardType VARCHAR2(20),
     FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID) -- Relacja jeden do wielu: Jeden klient może mieć wiele kart
 );
 
--- TransactionLimits (Limity transakcji)
+-- TABELA TransactionLimits (Limity transakcji)
 CREATE TABLE TransactionLimits (
-    LimitID NUMBER PRIMARY KEY,
+    LimitID NUMBER DEFAULT seq_limit_id.NEXTVAL PRIMARY KEY,
     CardID NUMBER NOT NULL,
+    TransactionLimitType VARCHAR2(20) CHECK (TransactionLimitType IN ('BLIK', 'Phone', 'Physical Card')),
     DailyLimit NUMBER(15, 2),
     MonthlyLimit NUMBER(15, 2),
-    FOREIGN KEY (CardID) REFERENCES Cards(CardID) -- Relacja jeden do jednego: Jedna karta ma jedne limity transakcji
+    FOREIGN KEY (CardID) REFERENCES Cards(CardID) -- Relacja jeden do wielu: Jedna karta może mieć wiele limitów transakcji dla różnych typów płatności
 );
 
--- TransactionHistory (Historia transakcji)
+-- TABELA TransactionHistory (Historia transakcji)
 CREATE TABLE TransactionHistory (
-    TransactionID NUMBER PRIMARY KEY,
+    TransactionID NUMBER DEFAULT seq_transaction_id.NEXTVAL PRIMARY KEY,
     CardID NUMBER NOT NULL,
     TransactionDate DATE DEFAULT SYSDATE,
     Amount NUMBER(15, 2),
-    MerchantName VARCHAR(100),
+    MerchantName VARCHAR2(100),
     FOREIGN KEY (CardID) REFERENCES Cards(CardID) -- Relacja jeden do wielu: Jedna karta może mieć wiele transakcji
 );
 
--- LoginHistory (Historia logowania)
+-- TABELA LoginHistory (Historia logowania)
 CREATE TABLE LoginHistory (
-    LoginID NUMBER PRIMARY KEY,
+    LoginID NUMBER DEFAULT seq_login_id.NEXTVAL PRIMARY KEY,
     CustomerID NUMBER NOT NULL,
     LoginDate DATE DEFAULT SYSDATE,
-    IPAddress VARCHAR(45),
+    IPAddress VARCHAR2(45),
     FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID) -- Relacja jeden do wielu: Jeden klient może mieć wiele logowań
 );
 
--- CustomerAccounts (Relacja wiele do wielu między klientami a kontami)
+-- TABELA CustomerAccounts (Relacja wiele do wielu między klientami a kontami)
 CREATE TABLE CustomerAccounts (
     CustomerID NUMBER NOT NULL,
     AccountID NUMBER NOT NULL,

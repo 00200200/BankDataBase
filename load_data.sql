@@ -1,4 +1,6 @@
---  Departments
+-- Wstawianie danych do tabel
+
+-- Departments
 INSERT INTO Departments (DepartmentID, DepartmentName)
 VALUES (seq_department_id.NEXTVAL, 'IT');
 
@@ -11,14 +13,14 @@ VALUES (seq_department_id.NEXTVAL, 'Sprzedaż');
 INSERT INTO Departments (DepartmentID, DepartmentName)
 VALUES (seq_department_id.NEXTVAL, 'Kredyty');
 
---  Branches
+-- Branches
 INSERT INTO Branches (BranchID, BranchName, BranchAddress)
 VALUES (seq_branch_id.NEXTVAL, 'Oddział Warszawa', 'ul. Grunwaldzka 1, Warszawa');
 
 INSERT INTO Branches (BranchID, BranchName, BranchAddress)
 VALUES (seq_branch_id.NEXTVAL, 'Oddział Wrocław', 'ul. Curie-Skłodowskiej 13, Wrocław');
 
---  Positions
+-- Positions
 INSERT INTO Positions (PositionID, PositionName)
 VALUES (seq_position_id.NEXTVAL, 'Menedżer');
 
@@ -32,20 +34,19 @@ INSERT INTO Positions (PositionID, PositionName)
 VALUES (seq_position_id.NEXTVAL, 'Doradca kredytowy');
 
 -- Customers
-INSERT INTO Customers (CustomerID, FirstName, LastName, Email, Phone, PESEL, IDNumber, Gender, CreatedAt)
-VALUES (seq_customer_id.NEXTVAL, 'Jan', 'Kowalski', 'jan.kowalski@gmail.com', '123456789', '12345678901', 'DBC123456', 'M', SYSDATE);
+INSERT INTO Customers (CustomerID, FirstName, LastName, Email, Phone, BirthDate, PESEL, IDNumber, Gender, CreatedAt)
+VALUES (seq_customer_id.NEXTVAL, 'Jan', 'Kowalski', 'jan.kowalski@gmail.com', '123456789', TO_DATE('1980-01-01', 'YYYY-MM-DD'), '12345678901', 'DBC123456', 'M', SYSDATE);
 
-INSERT INTO Customers (CustomerID, FirstName, LastName, Email, Phone, PESEL, IDNumber, Gender, CreatedAt)
-VALUES (seq_customer_id.NEXTVAL, 'Anna', 'Kowalska', 'anna.kowalska@gmail.com', '987654321', '10987654321', 'DEF654321', 'F', SYSDATE);
+INSERT INTO Customers (CustomerID, FirstName, LastName, Email, Phone, BirthDate, PESEL, IDNumber, Gender, CreatedAt)
+VALUES (seq_customer_id.NEXTVAL, 'Anna', 'Kowalska', 'anna.kowalska@gmail.com', '987654321', TO_DATE('1990-02-02', 'YYYY-MM-DD'), '10987654321', 'DEF654321', 'F', SYSDATE);
 
-INSERT INTO Customers (CustomerID, FirstName, LastName, Email, Phone, PESEL, IDNumber, Gender, CreatedAt)
-VALUES (seq_customer_id.NEXTVAL, 'Wojtek', 'Suchecki', 'wojtek.suchecki@gmail.com', '123123123', '11112222333', 'DBC789012', 'M', SYSDATE);
+INSERT INTO Customers (CustomerID, FirstName, LastName, Email, Phone, BirthDate, PESEL, IDNumber, Gender, CreatedAt)
+VALUES (seq_customer_id.NEXTVAL, 'Wojtek', 'Suchecki', 'wojtek.suchecki@gmail.com', '123123123', TO_DATE('2002-03-03', 'YYYY-MM-DD'), '11112222333', 'DBC789012', 'M', SYSDATE);
 
-INSERT INTO Customers (CustomerID, FirstName, LastName, Email, Phone, PESEL, IDNumber, Gender, CreatedAt)
-VALUES (seq_customer_id.NEXTVAL, 'Michal', 'Furgala', 'michal.furgala@gmail.com', '321321321', '33322111100', 'DBC654987', 'M', SYSDATE);
+INSERT INTO Customers (CustomerID, FirstName, LastName, Email, Phone, BirthDate, PESEL, IDNumber, Gender, CreatedAt)
+VALUES (seq_customer_id.NEXTVAL, 'Michal', 'Furgala', 'michal.furgala@gmail.com', '321321321', TO_DATE('2002-04-04', 'YYYY-MM-DD'), '33322111100', 'DBC654987', 'M', SYSDATE);
 
-
---  Addresses
+-- Addresses
 INSERT INTO Addresses (AddressID, CustomerID, Street, City, State, PostalCode, Country)
 VALUES (seq_address_id.NEXTVAL, 1, 'ul. Grunwaldzka 1', 'Warszawa', 'Mazowieckie', '00-001', 'Polska');
 
@@ -58,7 +59,7 @@ VALUES (seq_address_id.NEXTVAL, 3, 'ul. Curie-Skłodowskiej 13', 'Wrocław', 'Do
 INSERT INTO Addresses (AddressID, CustomerID, Street, City, State, PostalCode, Country)
 VALUES (seq_address_id.NEXTVAL, 4, 'ul. Benedyktyńska 4', 'Wrocław', 'Dolnośląskie', '50-250', 'Polska');
 
---  Employees
+-- Employees
 INSERT INTO Employees (EmployeeID, FirstName, LastName, Email, Phone, DepartmentID, BranchID, PositionID)
 VALUES (seq_employee_id.NEXTVAL, 'Adam', 'Nowicki', 'adam.nowicki@gmail.com', '555666777', 1, 1, 1);
 
@@ -71,7 +72,7 @@ VALUES (seq_employee_id.NEXTVAL, 'Wojtek', 'Suchecki', 'wojtek.suchecki@gmail.co
 INSERT INTO Employees (EmployeeID, FirstName, LastName, Email, Phone, DepartmentID, BranchID, PositionID)
 VALUES (seq_employee_id.NEXTVAL, 'Michal', 'Furgala', 'michal.furgala@gmail.com', '555999000', 4, 2, 4);
 
---  AccountTypes
+-- AccountTypes
 INSERT INTO AccountTypes (AccountTypeID, AccountTypeName)
 VALUES (seq_account_type_id.NEXTVAL, 'Oszczędnościowe');
 
@@ -120,17 +121,23 @@ INSERT INTO Cards (CardID, CustomerID, CardNumber, ExpirationDate, CVV, CardType
 VALUES (seq_card_id.NEXTVAL, 4, '8888777766665555', TO_DATE('2027-07-31', 'YYYY-MM-DD'), '321', 'Visa');
 
 -- TransactionLimits
-INSERT INTO TransactionLimits (LimitID, CardID, DailyLimit, MonthlyLimit)
-VALUES (seq_limit_id.NEXTVAL, 1, 500.00, 10000.00);
+INSERT INTO TransactionLimits (LimitID, CardID, TransactionLimitType, DailyLimit, MonthlyLimit)
+VALUES (seq_limit_id.NEXTVAL, 1, 'BLIK', 500.00, 10000.00);
 
-INSERT INTO TransactionLimits (LimitID, CardID, DailyLimit, MonthlyLimit)
-VALUES (seq_limit_id.NEXTVAL, 2, 300.00, 8000.00);
+INSERT INTO TransactionLimits (LimitID, CardID, TransactionLimitType, DailyLimit, MonthlyLimit)
+VALUES (seq_limit_id.NEXTVAL, 1, 'Phone', 300.00, 8000.00);
 
-INSERT INTO TransactionLimits (LimitID, CardID, DailyLimit, MonthlyLimit)
-VALUES (seq_limit_id.NEXTVAL, 3, 700.00, 12000.00);
+INSERT INTO TransactionLimits (LimitID, CardID, TransactionLimitType, DailyLimit, MonthlyLimit)
+VALUES (seq_limit_id.NEXTVAL, 1, 'Physical Card', 700.00, 12000.00);
 
-INSERT INTO TransactionLimits (LimitID, CardID, DailyLimit, MonthlyLimit)
-VALUES (seq_limit_id.NEXTVAL, 4, 1000.00, 15000.00);
+INSERT INTO TransactionLimits (LimitID, CardID, TransactionLimitType, DailyLimit, MonthlyLimit)
+VALUES (seq_limit_id.NEXTVAL, 2, 'BLIK', 500.00, 10000.00);
+
+INSERT INTO TransactionLimits (LimitID, CardID, TransactionLimitType, DailyLimit, MonthlyLimit)
+VALUES (seq_limit_id.NEXTVAL, 2, 'Phone', 300.00, 8000.00);
+
+INSERT INTO TransactionLimits (LimitID, CardID, TransactionLimitType, DailyLimit, MonthlyLimit)
+VALUES (seq_limit_id.NEXTVAL, 2, 'Physical Card', 700.00, 12000.00);
 
 -- TransactionHistory
 INSERT INTO TransactionHistory (TransactionID, CardID, TransactionDate, Amount, MerchantName)
@@ -157,7 +164,6 @@ VALUES (seq_login_id.NEXTVAL, 3, SYSDATE, '192.168.1.3');
 
 INSERT INTO LoginHistory (LoginID, CustomerID, LoginDate, IPAddress)
 VALUES (seq_login_id.NEXTVAL, 4, SYSDATE, '192.168.1.4');
-
 
 -- CustomerAccounts -- WIELE DO WIELU Kowalsy mają wspolne Konto Fugala posiada 3 konta.
 INSERT INTO CustomerAccounts (CustomerID, AccountID)

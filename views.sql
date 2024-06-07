@@ -1,3 +1,16 @@
+
+-- Widok dla wyświetlania niepelnych informacji o kliencie
+CREATE VIEW vw_customer_info_part AS
+SELECT 
+    c.CustomerID,
+    c.FirstName,
+    c.LastName,
+    c.Email,
+    c.Gender
+FROM 
+    Customers c;
+
+
 -- Widok dla wyświetlania pełnych informacji o kliencie
 CREATE VIEW vw_customer_info AS
 SELECT 
@@ -22,13 +35,11 @@ LEFT JOIN
 
     
 -- Widok dla wyświetlania transakcji kart
+DROP VIEW vw_card_transactions;
 CREATE VIEW vw_card_transactions AS
-SELECT
+SELECT 
     c.CardID,
     c.CardNumber,
-    c.ExpirationDate,
-    c.CVV,
-    c.CardType,
     t.TransactionID,
     t.TransactionDate,
     t.Amount,
