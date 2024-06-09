@@ -156,6 +156,29 @@ VALUES (seq_transaction_id.NEXTVAL, 4, SYSDATE - INTERVAL '5' DAY, 100.00, 'Żab
 
 INSERT INTO TransactionHistory (TransactionID, CardID, TransactionDate, Amount, MerchantName)
 VALUES (seq_transaction_id.NEXTVAL, 4, SYSDATE - INTERVAL '2' DAY, 11000.00, 'ISpot');
+
+INSERT INTO TransactionHistory (TransactionID, CardID, TransactionDate, Amount, MerchantName)
+VALUES (seq_transaction_id.NEXTVAL, 1, SYSDATE - INTERVAL '2' DAY, 2000.00, 'Sklep A');
+
+INSERT INTO TransactionHistory (TransactionID, CardID, TransactionDate, Amount, MerchantName)
+VALUES (seq_transaction_id.NEXTVAL, 2, SYSDATE - INTERVAL '3' DAY, 3000.00, 'Sklep B');
+
+INSERT INTO TransactionHistory (TransactionID, CardID, TransactionDate, Amount, MerchantName)
+VALUES (seq_transaction_id.NEXTVAL, 3, SYSDATE - INTERVAL '1' DAY, 4000.00, 'Sklep C');
+
+INSERT INTO TransactionHistory (TransactionID, CardID, TransactionDate, Amount, MerchantName)
+VALUES (seq_transaction_id.NEXTVAL, 4, SYSDATE - INTERVAL '4' DAY, 5000.00, 'Sklep D');
+
+INSERT INTO TransactionHistory (TransactionID, CardID, TransactionDate, Amount, MerchantName)
+VALUES (seq_transaction_id.NEXTVAL, 1, SYSDATE - INTERVAL '5' DAY, 1500.00, 'Media Markt');
+
+INSERT INTO TransactionHistory (TransactionID, CardID, TransactionDate, Amount, MerchantName)
+VALUES (seq_transaction_id.NEXTVAL, 2, SYSDATE - INTERVAL '10' DAY, 2500.00, 'Media Expert');
+
+INSERT INTO TransactionHistory (TransactionID, CardID, TransactionDate, Amount, MerchantName)
+VALUES (seq_transaction_id.NEXTVAL, 3, SYSDATE - INTERVAL '15' DAY, 3500.00, 'Komputronik');
+
+
 -- LoginHistory
 INSERT INTO LoginHistory (LoginID, CustomerID, LoginDate, IPAddress)
 VALUES (seq_login_id.NEXTVAL, 1, SYSDATE - INTERVAL '1' DAY, '192.168.1.1');
@@ -193,3 +216,24 @@ VALUES (4, 6);
 
 INSERT INTO CustomerAccounts (CustomerID, AccountID)
 VALUES (4, 7);
+
+
+
+
+-- Konto z ujemnym saldem 
+
+INSERT INTO Customers (CustomerID, FirstName, LastName, Email, Phone, BirthDate, PESEL, IDNumber, Gender, CreatedAt)
+VALUES (seq_customer_id.NEXTVAL, 'Piotr', 'Nowak', 'piotr.nowak@gmail.com', '987654321', TO_DATE('1985-05-05', 'YYYY-MM-DD'), '55667788900', 'ID1234567', 'M', SYSDATE);
+
+
+INSERT INTO Addresses (AddressID, CustomerID, Street, City, State, PostalCode, Country)
+VALUES (seq_address_id.NEXTVAL, seq_customer_id.CURRVAL, 'ul. Jana Pawła II 2', 'Kraków', 'Małopolskie', '31-158', 'Polska');
+
+
+INSERT INTO Accounts (AccountID, AccountNumber, AccountTypeID, BranchID, Balance, CreatedAt)
+VALUES (seq_account_id.NEXTVAL, '3333444455556666', 1, 1, -200.00, SYSDATE);
+
+
+INSERT INTO CustomerAccounts (CustomerID, AccountID)
+VALUES (seq_customer_id.CURRVAL, seq_account_id.CURRVAL);
+
