@@ -24,22 +24,8 @@ DROP VIEW vw_login_history;
 DROP VIEW vw_employee_info;
 
 -- Usunięcie indeksów (jeśli nie są usuwane automatycznie z tabelami)
-DROP INDEX idx_customers_email;
 DROP INDEX idx_customers_pesel;
-DROP INDEX idx_customers_idnumber;
-DROP INDEX idx_customers_phone;
-DROP INDEX idx_addresses_customerid;
-DROP INDEX idx_employees_departmentid;
-DROP INDEX idx_employees_branchid;
-DROP INDEX idx_employees_positionid;
-DROP INDEX idx_accounts_accountnumber;
-DROP INDEX idx_accounts_accounttypeid;
-DROP INDEX idx_accounts_branchid;
 DROP INDEX idx_cards_customerid;
-DROP INDEX idx_cards_cardnumber;
-DROP INDEX idx_transactionhistory_cardid;
-DROP INDEX idx_transactionhistory_transactiondate;
-DROP INDEX idx_loginhistory_customerid;
 
 -- Usunięcie sekwencji
 DROP SEQUENCE seq_customer_id;
