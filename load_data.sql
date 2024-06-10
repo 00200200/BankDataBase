@@ -1,5 +1,3 @@
--- Wstawianie danych do tabel
-
 -- Departments
 INSERT INTO Departments (DepartmentID, DepartmentName)
 VALUES (seq_department_id.NEXTVAL, 'IT');
