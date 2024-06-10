@@ -1,5 +1,6 @@
 
--- Widok dla wyświetlania niepelnych informacji o kliencie
+-- Niepelne inforamcje o Kliencie
+-- Np. takie informacje ma pracownik ktory nie odpowiednich uprawnien
 CREATE VIEW vw_customer_info_part AS
 SELECT 
     c.CustomerID,
@@ -11,7 +12,7 @@ FROM
     Customers c;
 
 
--- Widok dla wyświetlania pełnych informacji o kliencie
+-- Pelne informacje kliencie
 CREATE VIEW vw_customer_info AS
 SELECT 
     c.CustomerID,
@@ -34,7 +35,7 @@ LEFT JOIN
     Addresses a ON c.CustomerID = a.CustomerID;
 
     
--- Widok dla wyświetlania transakcji kart
+-- Transakcje kart
 DROP VIEW vw_card_transactions;
 CREATE VIEW vw_card_transactions AS
 SELECT 
@@ -49,7 +50,7 @@ FROM
 JOIN
     TransactionHistory t ON c.CardID = t.CardID;
     
--- Widok dla wyświetlania historii logowania klienta
+-- Historia logowania klienta
 CREATE VIEW vw_login_history AS
 SELECT
     lh.LoginID,
@@ -63,7 +64,7 @@ FROM
 JOIN
     Customers c ON lh.CustomerID = c.CustomerID;
     
--- Widok dla wyświetlania pełnych informacji o pracownikach
+-- Pełnych informacji o pracownikach
 CREATE VIEW vw_employee_info AS
 SELECT 
     e.EmployeeID,
