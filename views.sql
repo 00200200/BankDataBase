@@ -36,7 +36,6 @@ LEFT JOIN
 
     
 -- Transakcje kart
-DROP VIEW vw_card_transactions;
 CREATE VIEW vw_card_transactions AS
 SELECT 
     c.CardID,
