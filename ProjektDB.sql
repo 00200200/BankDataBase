@@ -17,6 +17,7 @@ DROP TABLE AccountTypes CASCADE CONSTRAINTS;
 DROP TABLE PaymentTypes CASCADE CONSTRAINTS;
 
 -- Usunięcie widoków
+DROP VIEW vw_customer_info_part;
 DROP VIEW vw_customer_info;
 DROP VIEW vw_card_transactions;
 DROP VIEW vw_login_history;
