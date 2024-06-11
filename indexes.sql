@@ -4,16 +4,11 @@ CREATE INDEX idx_customers_pesel ON Customers(PESEL);
 -- Czesto bedziemy wyszukiwac karty danego klienta
 CREATE INDEX idx_cards_customerid ON Cards(CustomerID);
 
--- Dla szybszego wyszukiwania urodzin
+-- Codziennie sprawdzamy czy ktos ma urodziny
 CREATE INDEX idx_customers_birthdate ON Customers(BirthDate); 
-x
--- Dla sprawdzanai salda ujemnego
+
+-- Codziennie sprawdzamy czy ktos nie ma ujemnego salda
 CREATE INDEX idx_accounts_balance ON Accounts(Balance); 
 
+-- Codziennie sprawdzamy czy karty nie sa przeterminowane
 CREATE INDEX idx_cards_expirationdate ON Cards(ExpirationDate); 
-
-CREATE INDEX idx_transactionhistory_amount ON TransactionHistory(Amount); 
-
-CREATE INDEX idx_loginhistory_logindate ON LoginHistory(LoginDate);
-
-CREATE INDEX idx_transactionhistory_transactiondate ON TransactionHistory(TransactionDate); 
